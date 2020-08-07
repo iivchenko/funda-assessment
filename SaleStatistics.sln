@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaleStatistics.Application"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaleStatistics.Infrastructure", "src\SaleStatistics.Infrastructure\SaleStatistics.Infrastructure.csproj", "{99F36C42-ECC8-4820-8F7C-E5B4C93F246F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{48034405-FCEB-4742-B4B2-E6517A82CD9F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaleStatistics.Application.Tests", "src\SaleStatistics.Application.Tests\SaleStatistics.Application.Tests.csproj", "{70A01292-A09B-493C-AC8E-A1333336CF5C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,9 +31,16 @@ Global
 		{99F36C42-ECC8-4820-8F7C-E5B4C93F246F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99F36C42-ECC8-4820-8F7C-E5B4C93F246F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99F36C42-ECC8-4820-8F7C-E5B4C93F246F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70A01292-A09B-493C-AC8E-A1333336CF5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70A01292-A09B-493C-AC8E-A1333336CF5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70A01292-A09B-493C-AC8E-A1333336CF5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70A01292-A09B-493C-AC8E-A1333336CF5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{70A01292-A09B-493C-AC8E-A1333336CF5C} = {48034405-FCEB-4742-B4B2-E6517A82CD9F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BF0744ED-2AD0-4BCE-9FC4-0D9D37850E0C}
