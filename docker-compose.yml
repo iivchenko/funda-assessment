@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  salestatistics.web:
+    image: ${DOCKER_REGISTRY-}salestatisticsweb
+    build:
+      context: .
+      dockerfile: src/SaleStatistics.Web/Dockerfile
