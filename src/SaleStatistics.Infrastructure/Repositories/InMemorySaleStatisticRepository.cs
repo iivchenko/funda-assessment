@@ -7,21 +7,33 @@ namespace SaleStatistics.Infrastructure.Repositories
 {
     public sealed class InMemorySaleStatisticRepository : ISaleStatisticRepository
     {
-        private IDictionary<Guid, SalesStatistic> _statistics;
+        private IDictionary<Guid, SalesStatistic> _storage;
 
         public InMemorySaleStatisticRepository()
         {
-            _statistics = new Dictionary<Guid, SalesStatistic>();
+            _storage = new Dictionary<Guid, SalesStatistic>();
         }
 
         public Task<IEnumerable<SalesStatistic>> GetSaleStatistics()
         {
-            throw new System.NotImplementedException();
+            return Task.FromResult<IEnumerable<SalesStatistic>>(_storage.Values);
         }
 
         public Task UpdateSaleStatistics(SalesStatistic statistics)
         {
-            throw new System.NotImplementedException();
+            lock (_storage)
+            {
+                if (_storage.ContainsKey(statistics.Id))
+                {
+                    _storage[statistics.Id] = statistics;
+                }
+                else
+                {
+                    _storage.Add(statistics.Id, statistics);
+                }
+            }
+
+            return Task.CompletedTask;
         }
     }
 }
