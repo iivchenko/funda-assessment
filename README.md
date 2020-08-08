@@ -13,7 +13,10 @@ Funda Assessment is an implementation of .NET Software Engineer Technical Assign
 ## How to run application without Visual Studio
 Just run **_start.bat** script
 
-# Tech Stack
+## Releases
+ * [v1.0](https://github.com/iivchenko/funda-assessment/releases/v1.0)
+ 
+## Tech Stack
  * [ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-3.1)
  * [Refit](https://github.com/reactiveui/refit) 
  * [NUnit](https://nunit.org/)
