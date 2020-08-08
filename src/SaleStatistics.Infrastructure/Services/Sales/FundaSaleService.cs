@@ -1,4 +1,5 @@
 ﻿using SaleStatistics.Application.Services.Sales;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,9 +14,92 @@ namespace SaleStatistics.Infrastructure.Services.Sales
             _client = client;
         }
 
-        public Task<IEnumerable<Sale>> ReadSales(string filter)
+        public async Task<IEnumerable<Sale>> ReadSales(string filter)
         {
-            throw new System.NotImplementedException();
+            switch (filter)
+            {
+                case "/amsterdam/tuin":
+
+                    return new List<Sale>
+                      {
+                              new Sale
+                              (
+                                  Guid.NewGuid(),
+                                  1,
+                                  "Agent 1"
+                              ),
+                              new Sale
+                              (
+                                  Guid.NewGuid(),
+                                  1,
+                                  "Agent 1"
+                              ),
+                              new Sale
+                              (
+                                  Guid.NewGuid(),
+                                  1,
+                                  "Agent 1"
+                              ),
+                              new Sale
+                              (
+                                  Guid.NewGuid(),
+                                  2,
+                                  "Agent 2"
+                              ),
+                              new Sale
+                              (
+                                  Guid.NewGuid(),
+                                  3,
+                                  "Agent 3"
+                              ),
+                              new Sale
+                              (
+                                  Guid.NewGuid(),
+                                  1,
+                                  "Agent 1"
+                              ),
+                      };
+                default:
+                    return new List<Sale>
+                      {
+                              new Sale
+                              (
+                                  Guid.NewGuid(),
+                                  2,
+                                  "Agent 2"
+                              ),
+                              new Sale
+                              (
+                                  Guid.NewGuid(),
+                                  2,
+                                  "Agent 2"
+                              ),
+                              new Sale
+                              (
+                                  Guid.NewGuid(),
+                                  1,
+                                  "Agent 1"
+                              ),
+                              new Sale
+                              (
+                                  Guid.NewGuid(),
+                                  2,
+                                  "Agent 2"
+                              ),
+                              new Sale
+                              (
+                                  Guid.NewGuid(),
+                                  3,
+                                  "Agent 3"
+                              ),
+                              new Sale
+                              (
+                                  Guid.NewGuid(),
+                                  1,
+                                  "Agent 1"
+                              ),
+                      };
+            }
         }
     }
 }
