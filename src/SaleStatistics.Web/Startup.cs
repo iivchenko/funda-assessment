@@ -6,7 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Refit;
+using SaleStatistics.Application.Repositories.SaleStatistics;
 using SaleStatistics.Application.Services.Sales;
+using SaleStatistics.Infrastructure.Repositories;
 using SaleStatistics.Infrastructure.Services.Sales;
 using System;
 
@@ -30,6 +32,8 @@ namespace SaleStatistics.Web
             services
                 .AddRefitClient<IFundaClient>()
                 .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetValue<string>("FundaApiAddress")));
+
+            services.AddScoped<ISaleStatisticRepository, InMemorySaleStatisticRepository>();
 
             services.AddScoped<ISaleService, FundaSaleService>();
         }
