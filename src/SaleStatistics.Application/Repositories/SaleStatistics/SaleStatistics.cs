@@ -5,7 +5,7 @@ namespace SaleStatistics.Application.Repositories.SaleStatistics
 {
     public sealed class SaleStatisticCriteria
     {
-        public long Count { get; set; }
+        public int Count { get; set; }
 
         public string Filter { get; set; }
     }
