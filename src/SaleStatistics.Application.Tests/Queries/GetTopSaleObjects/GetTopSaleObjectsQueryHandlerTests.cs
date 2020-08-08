@@ -6,9 +6,21 @@ namespace SaleStatistics.Application.Tests.Queries.GetTopSaleObjects
     public sealed class GetTopSaleObjectsQueryHandlerTests
     {
         [Test]
-        public void DummyTest()
+        public void Handle_NoSalesBySpecifiedFilter_ReturnEmptyStatistics()
         {
-            Assert.Pass();
+
+        }
+
+        [Test]
+        public void Handle_CountIsZero_ReturnEmptyStatistics()
+        {
+
+        }
+
+        [Test]
+        public void Handle_HappyPath_ReturnCorrectStatistics()
+        {
+
         }
     }
 }
