@@ -1,27 +1,45 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using MediatR;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using SaleStatistics.Application.Commands.UpdateTopSalesStatistics;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace SaleStatistics.Web.HostedServices
 {
-    public sealed class ScheduledStatisticUpdateHostedService : IHostedService
+    public sealed class ScheduledStatisticUpdateHostedService : BackgroundService
     {
-        public Task StartAsync(CancellationToken cancellationToken)
+        private readonly IServiceProvider _serviceProvider;
+
+        public ScheduledStatisticUpdateHostedService(IServiceProvider serviceProvider)
         {
-            // TODO: 
-            // Start timer
-            // By schedule push update statistics command
-            throw new NotImplementedException();
+            _serviceProvider = serviceProvider;
         }
 
-        public Task StopAsync(CancellationToken cancellationToken)
+        protected async  override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            // TODO:
-            // stop timver
-            // Wait for the update if in progress
-            // dispose timer
-            throw new NotImplementedException();
+            var schedule = 60000d;
+
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+
+                schedule = TimeSpan.Parse(configuration.GetValue<string>("StatisticsUpdateInterval")).TotalMilliseconds;
+            }
+
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                using (var scope = _serviceProvider.CreateScope())
+                {
+                    var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+
+                    await mediator.Send(new UpdateTopSalesStatisticsCommand());
+                }
+
+                await Task.Delay((int)schedule, stoppingToken);
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ using SaleStatistics.Application.Repositories.SaleStatistics;
 using SaleStatistics.Application.Services.Sales;
 using SaleStatistics.Infrastructure.Repositories;
 using SaleStatistics.Infrastructure.Services.Sales;
+using SaleStatistics.Web.HostedServices;
 using System;
 
 namespace SaleStatistics.Web
@@ -33,9 +34,11 @@ namespace SaleStatistics.Web
                 .AddRefitClient<IFundaClient>()
                 .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetValue<string>("FundaApiAddress")));
 
-            services.AddScoped<ISaleStatisticRepository, InMemorySaleStatisticRepository>();
+            services.AddSingleton<ISaleStatisticRepository, InMemorySaleStatisticRepository>();
 
             services.AddScoped<ISaleService, FundaSaleService>();
+
+            services.AddHostedService<ScheduledStatisticUpdateHostedService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

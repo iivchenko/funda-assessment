@@ -1,6 +1,7 @@
 ﻿using SaleStatistics.Application.Repositories.SaleStatistics;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SaleStatistics.Infrastructure.Repositories
@@ -16,7 +17,7 @@ namespace SaleStatistics.Infrastructure.Repositories
 
         public Task<IEnumerable<SalesStatistic>> GetSaleStatistics()
         {
-            return Task.FromResult<IEnumerable<SalesStatistic>>(_storage.Values);
+            return Task.FromResult<IEnumerable<SalesStatistic>>(_storage.Values.ToList());
         }
 
         public Task UpdateSaleStatistics(SalesStatistic statistics)

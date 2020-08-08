@@ -22,7 +22,7 @@ namespace SaleStatistics.Application.Commands.UpdateTopSalesStatistics
         {
             var statistics = await _saleStatisticRepository.GetSaleStatistics();
 
-            foreach(var statistic in statistics)
+            foreach (var statistic in statistics)
             {
                 var sales = await _saleService.ReadSales(statistic.Criteria.Filter);
 
