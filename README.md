@@ -16,6 +16,7 @@ Just run **_start.bat** script
 ## Releases
  * [v1.0](https://github.com/iivchenko/funda-assessment/releases/v1.0)
  * [v1.1](https://github.com/iivchenko/funda-assessment/releases/v1.1)
+ * [v1.2](https://github.com/iivchenko/funda-assessment/releases/v1.2)
  
 ## Tech Stack
  * [ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-3.1)
