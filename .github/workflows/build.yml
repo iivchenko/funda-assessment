@@ -21,6 +21,6 @@ jobs:
     - name: Dependencies restore
       run: dotnet restore SaleStatistics.sln
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build --configuration Release --no-restore SaleStatistics.sln
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      run: dotnet test --no-restore --verbosity normal SaleStatistics.sln
