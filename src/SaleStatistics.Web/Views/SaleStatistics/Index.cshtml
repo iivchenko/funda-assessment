@@ -1,0 +1,63 @@
+﻿@model SaleStatisticsViewModel
+
+@{
+    ViewData["Title"] = "Sales Statistics";
+}
+
+<div class="text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <p>Top 10 real estate agents by sale objects in Amsterdam!</p>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Real Estate Agent</th>
+                            <th scope="col">Sales Objects</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            RenderStatistics(Model.TopTenAgentsWithSalesObjects);
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col">
+                <p>Top 10 real estate agents by sale objects with garden in Amsterdam!</p>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Real Estate Agent</th>
+                            <th scope="col">Sales Objects</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            RenderStatistics(Model.TopTenAgentsWithSalesObjectsAndGardens);
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@{
+    void RenderStatistics(IEnumerable<SaleStatisticsItem> items)
+    {
+        var i = 1;
+
+        foreach (var item in items)
+        {
+            <tr>
+                <th scope="row">@i</th>
+                <td>@item.Agent</td>
+                <td>@item.Count</td>
+            </tr>
+
+            i++;
+        }
+    }
+}
