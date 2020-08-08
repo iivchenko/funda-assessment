@@ -2,17 +2,22 @@
 
 namespace SaleStatistics.Web.Models
 {
-    public sealed class SaleStatisticsItem
+    public sealed class SaleStatisticItemViewModel
     {
         public string Agent { get; set; }
 
         public int Count { get; set; }
     }
 
+    public sealed class SaleStatisticViewModel
+    {
+        public string Description { get; set; }
+
+        public IEnumerable<SaleStatisticItemViewModel> Statistics { get; set; }
+    }
+
     public class SaleStatisticsViewModel
     {
-        public IEnumerable<SaleStatisticsItem> TopTenAgentsWithSalesObjects { get; set; }
-
-        public IEnumerable<SaleStatisticsItem> TopTenAgentsWithSalesObjectsAndGardens { get; set; }
+        public IEnumerable<SaleStatisticViewModel> Statistics { get; set; }
     }
 }

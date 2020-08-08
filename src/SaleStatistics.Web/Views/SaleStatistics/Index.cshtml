@@ -2,13 +2,15 @@
 
 @{
     ViewData["Title"] = "Sales Statistics";
+    var statistic1 = Model.Statistics.First();
+    var statistic2 = Model.Statistics.Last();
 }
 
 <div class="text-center">
     <div class="container">
         <div class="row">
             <div class="col">
-                <p>Top 10 real estate agents by sale objects in Amsterdam!</p>
+                <p>@statistic1.Description</p>
                 <table class="table">
                     <thead>
                         <tr>
@@ -19,13 +21,13 @@
                     </thead>
                     <tbody>
                         @{
-                            RenderStatistics(Model.TopTenAgentsWithSalesObjects);
+                            RenderStatistics(statistic1.Statistics);
                         }
                     </tbody>
                 </table>
             </div>
             <div class="col">
-                <p>Top 10 real estate agents by sale objects with garden in Amsterdam!</p>
+                <p>@statistic2.Description</p>
                 <table class="table">
                     <thead>
                         <tr>
@@ -36,7 +38,7 @@
                     </thead>
                     <tbody>
                         @{
-                            RenderStatistics(Model.TopTenAgentsWithSalesObjectsAndGardens);
+                            RenderStatistics(statistic2.Statistics);
                         }
                     </tbody>
                 </table>
@@ -45,7 +47,7 @@
     </div>
 </div>
 @{
-    void RenderStatistics(IEnumerable<SaleStatisticsItem> items)
+    void RenderStatistics(IEnumerable<SaleStatisticItemViewModel> items)
     {
         var i = 1;
 
