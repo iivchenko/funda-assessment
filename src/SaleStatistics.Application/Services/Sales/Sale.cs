@@ -4,10 +4,20 @@ namespace SaleStatistics.Application.Services.Sales
 {
     public sealed class Sale
     {
-        public Guid Id { get; set; }
+        public Sale(
+            Guid id, 
+            long agentId,
+            string agentName)
+        {
+            Id = id;
+            AgentId = agentId;
+            AgentName = agentName;
+        }
 
-        public long AgentId { get; set; }
+        public Guid Id { get; private set; }
 
-        public string AgentName { get; set; }
+        public long AgentId { get; private set; }
+
+        public string AgentName { get; private set; }
     }
 }
