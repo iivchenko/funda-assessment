@@ -30,9 +30,11 @@ namespace SaleStatistics.Web
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 
+            services.Configure<FundaSettings>(Configuration.GetSection(FundaSettings.Section));
+
             services
                 .AddRefitClient<IFundaClient>()
-                .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetValue<string>("FundaApiAddress")));
+                .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetValue<string>($"{FundaSettings.Section}:ApiAddress")));
 
             services.AddScoped<ISaleStatisticRepository, RedisSaleStatisticRepository>(x => new RedisSaleStatisticRepository(Configuration.GetValue<string>("RedisConnectionString")));
 

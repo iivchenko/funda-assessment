@@ -10,6 +10,7 @@ services:
     - redis
     environment:
       - RedisConnectionString=redis
+      - Funda__Key=ac1b0b1572524640a0ecc54de453ea9f
 
   redis:
     image: redis
