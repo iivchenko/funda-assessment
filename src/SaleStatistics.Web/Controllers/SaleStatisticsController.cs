@@ -13,16 +13,13 @@ namespace SaleStatistics.Web.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
-        private readonly ILogger<SaleStatisticsController> _logger;
 
         public SaleStatisticsController(
             IMapper mapper,
-            IMediator mediator,
-            ILogger<SaleStatisticsController> logger)
+            IMediator mediator)
         {
             _mapper = mapper;
             _mediator = mediator;
-            _logger = logger;
         }
 
         public async Task<IActionResult> Index()

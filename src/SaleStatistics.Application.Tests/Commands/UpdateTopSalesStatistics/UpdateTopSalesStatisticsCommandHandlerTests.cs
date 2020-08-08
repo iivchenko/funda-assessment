@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using Microsoft.Extensions.Logging;
+using Moq;
 using NUnit.Framework;
 using SaleStatistics.Application.Commands.UpdateTopSalesStatistics;
 using SaleStatistics.Application.Repositories.SaleStatistics;
@@ -18,14 +19,19 @@ namespace SaleStatistics.Application.Tests.Commands.UpdateTopSalesStatistics
 
         private Mock<ISaleService> _saleServiceMock;
         private Mock<ISaleStatisticRepository> _saleStatisticRepositoryMock;
+        private Mock<ILogger<UpdateTopSalesStatisticsCommandHandler>> _loggerMock;
 
         [SetUp]
         public void Setup()
         {
             _saleServiceMock = new Mock<ISaleService>();
             _saleStatisticRepositoryMock = new Mock<ISaleStatisticRepository>();
+            _loggerMock = new Mock<ILogger<UpdateTopSalesStatisticsCommandHandler>>();
 
-            _handler = new UpdateTopSalesStatisticsCommandHandler(_saleServiceMock.Object, _saleStatisticRepositoryMock.Object);
+            _handler = new UpdateTopSalesStatisticsCommandHandler(
+                _saleServiceMock.Object, 
+                _saleStatisticRepositoryMock.Object,
+                _loggerMock.Object);
         }
 
         [Test]

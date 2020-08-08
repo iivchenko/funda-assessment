@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SaleStatistics.Application.Queries.GetStatistics
 {
@@ -12,6 +13,8 @@ namespace SaleStatistics.Application.Queries.GetStatistics
     public sealed class GetStatisticsQueryResponseStatistic
     {
         public string Description { get; set; }
+
+        public DateTime DateUpdated { get; set; }
 
         public IEnumerable<GetStatisticsQueryResponseItem> Statistics { get; set; }
     }

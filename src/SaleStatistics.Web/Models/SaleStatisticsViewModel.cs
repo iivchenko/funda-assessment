@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SaleStatistics.Web.Models
 {
@@ -12,6 +13,8 @@ namespace SaleStatistics.Web.Models
     public sealed class SaleStatisticViewModel
     {
         public string Description { get; set; }
+
+        public DateTime DateUpdated { get; set; }
 
         public IEnumerable<SaleStatisticItemViewModel> Statistics { get; set; }
     }

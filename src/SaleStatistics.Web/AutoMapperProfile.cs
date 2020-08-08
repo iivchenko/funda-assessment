@@ -21,6 +21,7 @@ namespace SaleStatistics.Web
 
             CreateMap<GetStatisticsQueryResponseStatistic, SaleStatisticViewModel>()
                 .ForMember(dest => dest.Statistics, opt => opt.MapFrom(src => src.Statistics))
+                .ForMember(dest => dest.DateUpdated, opt => opt.MapFrom(src => src.DateUpdated))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
 
             CreateMap<GetStatisticsQueryResponseItem, SaleStatisticItemViewModel>()
@@ -29,6 +30,7 @@ namespace SaleStatistics.Web
 
             CreateMap<SalesStatistic, GetStatisticsQueryResponseStatistic>()
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Descripiton))
+                .ForMember(dest => dest.DateUpdated, opt => opt.MapFrom(src => src.DateUpdated))
                 .ForMember(dest => dest.Statistics, opt => opt.MapFrom(src => src.Items));
 
             CreateMap<SaleStatisticItem, GetStatisticsQueryResponseItem>()
