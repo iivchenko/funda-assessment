@@ -34,7 +34,7 @@ namespace SaleStatistics.Web
                 .AddRefitClient<IFundaClient>()
                 .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetValue<string>("FundaApiAddress")));
 
-            services.AddSingleton<ISaleStatisticRepository, InMemorySaleStatisticRepository>();
+            services.AddScoped<ISaleStatisticRepository, RedisSaleStatisticRepository>(x => new RedisSaleStatisticRepository(Configuration.GetValue<string>("RedisConnectionString")));
 
             services.AddScoped<ISaleService, FundaSaleService>();
 

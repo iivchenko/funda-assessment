@@ -6,3 +6,10 @@ services:
     build:
       context: .
       dockerfile: src/SaleStatistics.Web/Dockerfile
+    depends_on:
+    - redis
+    environment:
+      - RedisConnectionString=redis
+
+  redis:
+    image: redis
