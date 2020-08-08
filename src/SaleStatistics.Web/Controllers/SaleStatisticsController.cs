@@ -1,74 +1,57 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SaleStatistics.Application.Queries.GetTopSaleObjects;
 using SaleStatistics.Web.Models;
 
 namespace SaleStatistics.Web.Controllers
 {
     public class SaleStatisticsController : Controller
     {
+        private const int TopCount = 10;
+        private const string AmsterdamSalesFilter = "/amsterdam/";
+        private const string AmsterdamWithGarenSalesFilter = "/amsterdam/tuin";
+
+        private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
         private readonly ILogger<SaleStatisticsController> _logger;
 
-        public SaleStatisticsController(ILogger<SaleStatisticsController> logger)
+        public SaleStatisticsController(
+            IMapper mapper,
+            IMediator mediator,
+            ILogger<SaleStatisticsController> logger)
         {
+            _mapper = mapper;
+            _mediator = mediator;
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var dummy = new SaleStatisticsViewModel
+            var viewModel = new SaleStatisticsViewModel()
             {
-                TopTenAgentsWithSalesObjects = new List<SaleStatisticsItem>
-                {
-                    new SaleStatisticsItem
-                    {
-                        Agent = "Agent 1",
-                        Count = 10
-                    },
-                     new SaleStatisticsItem
-                    {
-                        Agent = "Agent 2",
-                        Count = 8
-                    },
-                      new SaleStatisticsItem
-                    {
-                        Agent = "Agent 3",
-                        Count = 4
-                    },
-                       new SaleStatisticsItem
-                    {
-                        Agent = "Agent 5",
-                        Count = 1
-                    }
-                },
-
-                TopTenAgentsWithSalesObjectsAndGardens = new List<SaleStatisticsItem>
-                {
-                    new SaleStatisticsItem
-                    {
-                        Agent = "Agent 1",
-                        Count = 6
-                    },
-                     new SaleStatisticsItem
-                    {
-                        Agent = "Agent 2",
-                        Count = 5
-                    },
-                      new SaleStatisticsItem
-                    {
-                        Agent = "Agent 3",
-                        Count = 4
-                    },
-                       new SaleStatisticsItem
-                    {
-                        Agent = "Agent 5",
-                        Count = 3
-                    }
-                }
+                TopTenAgentsWithSalesObjects = await QueryStatistics(TopCount, AmsterdamSalesFilter),
+                TopTenAgentsWithSalesObjectsAndGardens = await QueryStatistics(TopCount, AmsterdamWithGarenSalesFilter)
             };
 
-            return View(dummy);
+            return View(viewModel);
+        }
+
+        public async Task<IEnumerable<SaleStatisticsItem>> QueryStatistics(int count, string filter)
+        {
+            var query = new GetTopSaleObjectsQuery
+            {
+                Count = count,
+                Filter = filter
+            };
+
+            var response = await _mediator.Send(query);
+
+            return _mapper.Map<IEnumerable<GetTopSaleObjectsQueryResponseItem>, IEnumerable<SaleStatisticsItem>>(response.Statistics);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -1,8 +1,13 @@
+using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SaleStatistics.Application.Services.Sales;
+using SaleStatistics.Infrastructure.Services.Sales;
+using System;
 
 namespace SaleStatistics.Web
 {
@@ -18,6 +23,11 @@ namespace SaleStatistics.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddScoped<IFundaClient, FakeFundaClient>();
+            services.AddScoped<ISaleService, FundaSaleService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
