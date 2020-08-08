@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using SaleStatistics.Application.Services.Sales;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,15 +15,19 @@ namespace SaleStatistics.Application.Queries.GetTopSaleObjects
             _saleService = saleService;
         }
 
-        public Task<GetTopSaleObjectsQueryResponse> Handle(GetTopSaleObjectsQuery request, CancellationToken cancellationToken)
+        public async Task<GetTopSaleObjectsQueryResponse> Handle(GetTopSaleObjectsQuery request, CancellationToken cancellationToken)
         {
-            // TODO:
-            // Get all sales
-            // Group by Agent Id
-            // Select Angent name and sales count
-            // Sort by sales
-            // Filter top count
-            throw new System.NotImplementedException();
+            var sales = await _saleService.ReadSales(request.Filter);
+                
+            return new GetTopSaleObjectsQueryResponse
+            {
+                Statistics =
+                    sales
+                        .GroupBy(x => x.AgentId)
+                        .OrderByDescending(x => x.Count())
+                        .Take(request.Count)
+                        .Select(x => new GetTopSaleObjectsQueryResponseItem { RealEstateAgent = x.First().AgentName, SalesCount = x.Count() })
+            };
         }
     }
 }

@@ -107,9 +107,11 @@ namespace SaleStatistics.Application.Tests.Queries.GetTopSaleObjects
             var response = await _handler.Handle(query, CancellationToken.None);
 
             // Assert
-            Assert.That(response.Statistics, Has.Count.EqualTo(2), "Top two statistics should be created");
+            Assert.That(response.Statistics.Count(), Is.EqualTo(2), "Top two statistics should be created");
             Assert.That(response.Statistics.First().RealEstateAgent, Is.EqualTo("First agent"), "'First Agent' should in the top");
+            Assert.That(response.Statistics.First().SalesCount, Is.EqualTo(4), "Incorect sales count for 'First Agent'");
             Assert.That(response.Statistics.ElementAt(1).RealEstateAgent, Is.EqualTo("Second agent"), "'Second Agent' should in the second position of the top");
+            Assert.That(response.Statistics.ElementAt(1).SalesCount, Is.EqualTo(2), "Incorect sales count for 'Second Agent'");
         }
     }
 }
