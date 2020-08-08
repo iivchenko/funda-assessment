@@ -1,6 +1,7 @@
 ﻿using SaleStatistics.Application.Repositories.SaleStatistics;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SaleStatistics.Infrastructure.Repositories
 {
@@ -13,12 +14,12 @@ namespace SaleStatistics.Infrastructure.Repositories
             _statistics = new Dictionary<Guid, SalesStatistic>();
         }
 
-        public IEnumerable<SalesStatistic> GetSaleStatistics()
+        public Task<IEnumerable<SalesStatistic>> GetSaleStatistics()
         {
             throw new System.NotImplementedException();
         }
 
-        public void UpdateSaleStatistics(SalesStatistic statistics)
+        public Task UpdateSaleStatistics(SalesStatistic statistics)
         {
             throw new System.NotImplementedException();
         }

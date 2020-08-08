@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SaleStatistics.Application.Repositories.SaleStatistics
 {
     public interface ISaleStatisticRepository
     {
-        IEnumerable<SalesStatistic> GetSaleStatistics();
+        Task<IEnumerable<SalesStatistic>> GetSaleStatistics();
 
-        void UpdateSaleStatistics(SalesStatistic statistics);
+        Task UpdateSaleStatistics(SalesStatistic statistics);
     }
 }

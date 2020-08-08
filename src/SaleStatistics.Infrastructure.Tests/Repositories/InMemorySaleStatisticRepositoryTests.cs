@@ -1,5 +1,9 @@
 ﻿using NUnit.Framework;
+using SaleStatistics.Application.Repositories.SaleStatistics;
 using SaleStatistics.Infrastructure.Repositories;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SaleStatistics.Infrastructure.Tests.Repositories
 {
@@ -15,35 +19,66 @@ namespace SaleStatistics.Infrastructure.Tests.Repositories
         }
 
         [Test]
-        public void GetSaleStatistics_RepositoryEmpty_ReturnEmpty()
+        public async Task GetSaleStatistics_RepositoryEmpty_ReturnEmpty()
         {
-            // Arrange
             // Act
+            var statistics = await _repository.GetSaleStatistics();
+
             // Assert
+
+            Assert.That(statistics, Is.Empty, "Repository should be empty");
         }
 
         [Test]
-        public void GetSaleStatistics_RepositoryNotEmpty_ReturnStatistics()
+        public async Task GetSaleStatistics_UpdateSaleStatistics_RepositoryNotEmpty_ReturnStatistics()
         {
             // Arrange
+            var id = Guid.NewGuid();
+
+            var statistic = new SalesStatistic
+            {
+                Id = id
+            };
+
+            await _repository.UpdateSaleStatistics(statistic);
+
             // Act
+            var statistics = await _repository.GetSaleStatistics();
+
             // Assert
+            Assert.That(statistics.Count(), Is.EqualTo(1), "Only one statistics should exist in repository");
+            Assert.That(statistics.First().Id, Is.EqualTo(id), "Wrong statistic persited");
         }
 
         [Test]
-        public void UpdateSaleStatistics_RepositoryEmpty_CreatesNewStatistics()
+        public async Task UpdateSaleStatistics_RepositoryHasTheStatistic_UpdateExitingStatistic()
         {
             // Arrange
-            // Act
-            // Assert
-        }
+            var id = Guid.NewGuid();
 
-        [Test]
-        public void UpdateSaleStatistics_RepositoryHasTheStatistic_UpdateExitingStatistic()
-        {
-            // Arrange
+            var statistic = new SalesStatistic
+            {
+                Id = id,
+                Descripiton = "Initial"
+            };
+
+            await _repository.UpdateSaleStatistics(statistic);
+
             // Act
+            var expectedEtatistic = new SalesStatistic
+            {
+                Id = id,
+                Descripiton = "Expected"
+            };
+
+            await _repository.UpdateSaleStatistics(expectedEtatistic);
+
             // Assert
+            var statistics = await _repository.GetSaleStatistics();
+
+            Assert.That(statistics.Count(), Is.EqualTo(1), "Only one updated statistics should exist in repository");
+            Assert.That(statistics.First().Id, Is.EqualTo(id), "Wrong statistic persited");
+            Assert.That(statistics.First().Descripiton, Is.EqualTo("Expected"), "Wrong statistic persited");
         }
     }
 }
