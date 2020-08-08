@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using SaleStatistics.Application.Repositories.SaleStatistics;
 using SaleStatistics.Application.Services.Sales;
-using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,10 +20,23 @@ namespace SaleStatistics.Application.Commands.UpdateTopSalesStatistics
 
         public async Task<Unit> Handle(UpdateTopSalesStatisticsCommand request, CancellationToken cancellationToken)
         {
-            // TODO:
-            // Get all statistics from repoitory
-            // for each statistics get creterias; query data from SalesService; calculate statistcs; update repository record
-            throw new NotImplementedException();
+            var statistics = await _saleStatisticRepository.GetSaleStatistics();
+
+            foreach(var statistic in statistics)
+            {
+                var sales = await _saleService.ReadSales(statistic.Criteria.Filter);
+
+                statistic.Items =
+                    sales
+                        .GroupBy(x => x.AgentId)
+                        .OrderByDescending(x => x.Count())
+                        .Take(statistic.Criteria.Count)
+                        .Select(x => new SaleStatisticItem { RealEstateAgent = x.First().AgentName, SalesCount = x.Count() });
+
+                await _saleStatisticRepository.UpdateSaleStatistics(statistic);
+            }
+
+            return Unit.Value;
         }
     }
 }
