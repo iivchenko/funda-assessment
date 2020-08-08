@@ -37,7 +37,7 @@ namespace SaleStatistics.Application.Tests.Queries.GetTopSaleObjects
 
             _saleServiceMock
                 .Setup(x => x.ReadSales(It.IsAny<string>()))
-                .Returns(Enumerable.Empty<Sale>());
+                .ReturnsAsync(Enumerable.Empty<Sale>());
 
             // Act
             var response = await _handler.Handle(query, CancellationToken.None);
@@ -69,7 +69,7 @@ namespace SaleStatistics.Application.Tests.Queries.GetTopSaleObjects
 
             _saleServiceMock
                 .Setup(x => x.ReadSales(It.IsAny<string>()))
-                .Returns(sales);
+                .ReturnsAsync(sales);
 
             // Act
             var response = await _handler.Handle(query, CancellationToken.None);
@@ -101,7 +101,7 @@ namespace SaleStatistics.Application.Tests.Queries.GetTopSaleObjects
 
             _saleServiceMock
                 .Setup(x => x.ReadSales(It.IsAny<string>()))
-                .Returns(sales);
+                .ReturnsAsync(sales);
 
             // Act
             var response = await _handler.Handle(query, CancellationToken.None);

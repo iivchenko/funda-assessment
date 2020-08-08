@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SaleStatistics.Application.Services.Sales
 {
     public interface ISaleService
     {
-        IEnumerable<Sale> ReadSales(string filter);
+        Task<IEnumerable<Sale>> ReadSales(string filter);
     }
 }

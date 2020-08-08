@@ -1,5 +1,6 @@
 ﻿using SaleStatistics.Application.Services.Sales;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SaleStatistics.Infrastructure.Services.Sales
 {
@@ -12,7 +13,7 @@ namespace SaleStatistics.Infrastructure.Services.Sales
             _client = client;
         }
 
-        public IEnumerable<Sale> ReadSales(string filter)
+        public Task<IEnumerable<Sale>> ReadSales(string filter)
         {
             throw new System.NotImplementedException();
         }
