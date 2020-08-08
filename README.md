@@ -31,11 +31,17 @@ Just run **_start.bat** script
  * [Newtonsoft Json](https://www.newtonsoft.com/json)
 
 ## Principles:
-* SOLID
-* Clean Arhitecture
-* CQRS
-* Feature Folders
-* TDD
+ * SOLID
+ * Clean Arhitecture
+ * CQRS
+ * Feature Folders
+ * TDD
+
+## Ideas
+ * Extract service from MVC web
+ * Add swagger to the service
+ * Provide message queue and SignalR to update clients statistics 
+ * Replace Statistics Seeder with UI to create custom statistics
 
 # License
 
