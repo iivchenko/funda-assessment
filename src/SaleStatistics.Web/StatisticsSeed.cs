@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using SaleStatistics.Application.Repositories.SaleStatistics;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace SaleStatistics.Web
 {
@@ -19,36 +20,45 @@ namespace SaleStatistics.Web
                 var services = scope.ServiceProvider;
                 var repository = scope.ServiceProvider.GetService<ISaleStatisticRepository>();
 
-                var topSalesAgentsStatistics = new SalesStatistic
-                {
-                    Id = Guid.NewGuid(),
-                    Descripiton = "Top 10 real estate agents by sale objects in Amsterdam!",
-                    DateCreated = DateTime.UtcNow,
-                    DateUpdated = DateTime.UtcNow,
-                    Criteria = new SaleStatisticCriteria
-                    {
-                        Count = TopCount,
-                        Filter = AmsterdamSalesFilter
-                    },
-                    Items = new Collection<SaleStatisticItem>()
-                };
+                var statistics = repository.GetSaleStatistics().Result;
 
-                var topSalesWithGardenAgentsStatistics = new SalesStatistic
+                if(statistics.All(x => x.Criteria.Filter != AmsterdamSalesFilter))
                 {
-                    Id = Guid.NewGuid(),
-                    Descripiton = "Top 10 real estate agents by sale objects with garden in Amsterdam!",
-                    DateCreated = DateTime.UtcNow,
-                    DateUpdated = DateTime.UtcNow,
-                    Criteria = new SaleStatisticCriteria
+                    var topSalesAgentsStatistics = new SalesStatistic
                     {
-                        Count = TopCount,
-                        Filter = AmsterdamWithGarenSalesFilter
-                    },
-                    Items = new Collection<SaleStatisticItem>()
-                };
+                        Id = Guid.NewGuid(),
+                        Descripiton = "Top 10 real estate agents by sale objects in Amsterdam!",
+                        DateCreated = DateTime.UtcNow,
+                        DateUpdated = DateTime.UtcNow,
+                        Criteria = new SaleStatisticCriteria
+                        {
+                            Count = TopCount,
+                            Filter = AmsterdamSalesFilter
+                        },
+                        Items = new Collection<SaleStatisticItem>()
+                    };
 
-                repository.UpdateSaleStatistics(topSalesAgentsStatistics).Wait();
-                repository.UpdateSaleStatistics(topSalesWithGardenAgentsStatistics).Wait();
+                    repository.UpdateSaleStatistics(topSalesAgentsStatistics).Wait();
+                }
+
+                if (statistics.All(x => x.Criteria.Filter != AmsterdamWithGarenSalesFilter))
+                {
+                    var topSalesWithGardenAgentsStatistics = new SalesStatistic
+                    {
+                        Id = Guid.NewGuid(),
+                        Descripiton = "Top 10 real estate agents by sale objects with garden in Amsterdam!",
+                        DateCreated = DateTime.UtcNow,
+                        DateUpdated = DateTime.UtcNow,
+                        Criteria = new SaleStatisticCriteria
+                        {
+                            Count = TopCount,
+                            Filter = AmsterdamWithGarenSalesFilter
+                        },
+                        Items = new Collection<SaleStatisticItem>()
+                    };
+
+                    repository.UpdateSaleStatistics(topSalesWithGardenAgentsStatistics).Wait();
+                }
             }
         }
     }
