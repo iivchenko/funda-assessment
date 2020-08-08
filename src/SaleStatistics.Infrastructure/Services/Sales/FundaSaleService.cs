@@ -1,4 +1,5 @@
-﻿using SaleStatistics.Application.Services.Sales;
+﻿using AutoMapper;
+using SaleStatistics.Application.Services.Sales;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,98 +9,20 @@ namespace SaleStatistics.Infrastructure.Services.Sales
     public sealed class FundaSaleService : ISaleService
     {
         public readonly IFundaClient _client;
+        private readonly IMapper _mapper;
 
-        public FundaSaleService(IFundaClient client)
+        public FundaSaleService(IFundaClient client, IMapper mapper)
         {
             _client = client;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<Sale>> ReadSales(string filter)
         {
-            switch (filter)
-            {
-                case "/amsterdam/tuin":
+            var countResponse = await _client.GetObjects(new Guid("ac1b0b1572524640a0ecc54de453ea9f"), filter, 1, 1);
+            var salesResponse = await _client.GetObjects(new Guid("ac1b0b1572524640a0ecc54de453ea9f"), filter, 1, countResponse.TotalObjects);
 
-                    return new List<Sale>
-                      {
-                              new Sale
-                              (
-                                  Guid.NewGuid(),
-                                  1,
-                                  "Agent 1"
-                              ),
-                              new Sale
-                              (
-                                  Guid.NewGuid(),
-                                  1,
-                                  "Agent 1"
-                              ),
-                              new Sale
-                              (
-                                  Guid.NewGuid(),
-                                  1,
-                                  "Agent 1"
-                              ),
-                              new Sale
-                              (
-                                  Guid.NewGuid(),
-                                  2,
-                                  "Agent 2"
-                              ),
-                              new Sale
-                              (
-                                  Guid.NewGuid(),
-                                  3,
-                                  "Agent 3"
-                              ),
-                              new Sale
-                              (
-                                  Guid.NewGuid(),
-                                  1,
-                                  "Agent 1"
-                              ),
-                      };
-                default:
-                    return new List<Sale>
-                      {
-                              new Sale
-                              (
-                                  Guid.NewGuid(),
-                                  2,
-                                  "Agent 2"
-                              ),
-                              new Sale
-                              (
-                                  Guid.NewGuid(),
-                                  2,
-                                  "Agent 2"
-                              ),
-                              new Sale
-                              (
-                                  Guid.NewGuid(),
-                                  1,
-                                  "Agent 1"
-                              ),
-                              new Sale
-                              (
-                                  Guid.NewGuid(),
-                                  2,
-                                  "Agent 2"
-                              ),
-                              new Sale
-                              (
-                                  Guid.NewGuid(),
-                                  3,
-                                  "Agent 3"
-                              ),
-                              new Sale
-                              (
-                                  Guid.NewGuid(),
-                                  1,
-                                  "Agent 1"
-                              ),
-                      };
-            }
+            return _mapper.Map<IEnumerable<FundaObject>, IEnumerable<Sale>>(salesResponse.Objects);
         }
     }
 }

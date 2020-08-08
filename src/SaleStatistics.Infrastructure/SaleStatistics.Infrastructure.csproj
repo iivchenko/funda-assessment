@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.0.0" />
+    <PackageReference Include="refit" Version="5.1.67" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SaleStatistics.Application\SaleStatistics.Application.csproj" />
   </ItemGroup>
 

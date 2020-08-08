@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Refit;
 using SaleStatistics.Application.Services.Sales;
 using SaleStatistics.Infrastructure.Services.Sales;
 using System;
@@ -26,7 +27,10 @@ namespace SaleStatistics.Web
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddScoped<IFundaClient, FakeFundaClient>();
+            services
+                .AddRefitClient<IFundaClient>()
+                .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetValue<string>("FundaApiAddress")));
+
             services.AddScoped<ISaleService, FundaSaleService>();
         }
 
