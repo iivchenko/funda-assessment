@@ -19,7 +19,7 @@ jobs:
       with:
         dotnet-version: 3.1.200
     - name: Dependencies restore
-      run: dotnet restore
+      run: dotnet restore SaleStatistics.sln
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Test
