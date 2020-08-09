@@ -11,11 +11,12 @@
         <div class="row">
             <div class="col">
                 <p>@statistic1.Description</p>
+                <p>Last update: @statistic1.DateUpdated.ToLocalTime()</p>
                 @{
                     RenderWarning(statistic1);
                 }
-                <table class="table">
-                    <thead>
+                <table class="table perimeter-border">
+                    <thead class="thead-light">
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Real Estate Agent</th>
@@ -31,11 +32,12 @@
             </div>
             <div class="col">
                 <p>@statistic2.Description</p>
+                <p>Last update: @statistic2.DateUpdated.ToLocalTime()</p>
                 @{
                     RenderWarning(statistic2);
                 }
-                <table class="table">
-                    <thead>
+                <table class="table perimeter-border">
+                    <thead class="thead-light">
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Real Estate Agent</th>
@@ -75,12 +77,6 @@
         {
             <div class="alert alert-warning" role="alert">
                 Statistic curently unavailable! We are working on a new statistic. Thank you for patience.
-            </div>
-        }
-        else if (DateTime.UtcNow.Subtract(statistic.DateUpdated) > TimeSpan.FromMinutes(5))
-        {
-            <div class="alert alert-warning" role="alert">
-                Statistic is outdated! We are working on a new statistic. Thank you for patience.
             </div>
         }
     }

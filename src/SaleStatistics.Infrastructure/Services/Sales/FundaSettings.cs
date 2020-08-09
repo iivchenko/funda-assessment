@@ -9,5 +9,11 @@ namespace SaleStatistics.Infrastructure.Services.Sales
         public string ApiAddress { get; set; }
 
         public Guid Key { get; set; }
+
+        public TimeSpan CacheExpiration { get; set; }
+
+        public TimeSpan RequestDelay { get; set; }
+
+        public int PageSize { get; set; }
     }
 }

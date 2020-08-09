@@ -32,12 +32,11 @@ namespace SaleStatistics.Web
 
             services.Configure<FundaSettings>(Configuration.GetSection(FundaSettings.Section));
 
-            services
-                .AddRefitClient<IFundaClient>()
-                .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetValue<string>($"{FundaSettings.Section}:ApiAddress")));
+            services.AddHttpClient();
 
-            services.AddScoped<ISaleStatisticRepository, RedisSaleStatisticRepository>(x => new RedisSaleStatisticRepository(Configuration.GetValue<string>("RedisConnectionString")));
+            services.AddScoped<ISaleStatisticRepository, RedisSaleStatisticRepository>(x => new RedisSaleStatisticRepository(Configuration.GetConnectionString("Redis")));
 
+            services.AddSingleton<IFundaClientFactory, FundaClientFactory>();
             services.AddScoped<ISaleService, FundaSaleService>();
 
             services.AddHostedService<ScheduledStatisticUpdateHostedService>();
@@ -52,14 +51,12 @@ namespace SaleStatistics.Web
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

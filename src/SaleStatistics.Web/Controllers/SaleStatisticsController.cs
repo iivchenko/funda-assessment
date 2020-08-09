@@ -27,19 +27,19 @@ namespace SaleStatistics.Web.Controllers
             return View(await QueryStatistics());
         }
 
-        public async Task<SaleStatisticsViewModel> QueryStatistics()
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        private async Task<SaleStatisticsViewModel> QueryStatistics()
         {
             var query = new GetStatisticsQuery();
 
             var response = await _mediator.Send(query);
 
             return _mapper.Map<GetStatisticsQueryResponse, SaleStatisticsViewModel>(response);
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

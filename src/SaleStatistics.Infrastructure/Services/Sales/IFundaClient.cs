@@ -8,10 +8,7 @@ namespace SaleStatistics.Infrastructure.Services.Sales
 {
     public sealed class FundaResponse
     {
-        public IEnumerable<FundaObject> Objects { get; set; } 
-        
-        [JsonProperty("TotaalAantalObjecten")]
-        public int TotalObjects { get; set; }
+        public IEnumerable<FundaObject> Objects { get; set; }         
     }
 
     public sealed class FundaObject

@@ -1,13 +1,14 @@
 ﻿using Newtonsoft.Json;
 using SaleStatistics.Application.Repositories.SaleStatistics;
 using StackExchange.Redis;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace SaleStatistics.Infrastructure.Repositories
 {
-    public sealed class RedisSaleStatisticRepository : ISaleStatisticRepository
+    public sealed class RedisSaleStatisticRepository : ISaleStatisticRepository, IDisposable
     {
         private const string KeyPattern = "statistic:";
 
@@ -37,6 +38,11 @@ namespace SaleStatistics.Infrastructure.Repositories
             db.StringSet($"{KeyPattern}{statistics.Id}", JsonConvert.SerializeObject(statistics));
 
             return Task.CompletedTask;
+        }
+
+        public void Dispose()
+        {
+            _redis.Dispose();
         }
     }
 }

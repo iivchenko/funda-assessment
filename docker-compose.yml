@@ -9,7 +9,7 @@ services:
     depends_on:
     - redis
     environment:
-      - RedisConnectionString=redis
+      - ConnectionStrings__Redis=redis
       - Funda__Key=ac1b0b1572524640a0ecc54de453ea9f
 
   redis:
