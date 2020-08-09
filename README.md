@@ -30,6 +30,7 @@ Just run **_start.bat** script
  * [Redis](https://redis.io/)
  * [StackExchange Redis](https://github.com/StackExchange/StackExchange.Redis)
  * [Newtonsoft Json](https://www.newtonsoft.com/json)
+ * [LazyCache](https://github.com/alastairtree/LazyCache)
 
 ## Principles:
  * SOLID
